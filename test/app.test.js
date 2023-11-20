@@ -1,5 +1,6 @@
 import { createShip } from "../src/ship";
 import { createGameboard } from "../src/gameboard"
+import { createPlayer } from "../src/player";
 
 
 describe("ship testing", () =>{
@@ -173,5 +174,28 @@ describe("gameboard testing", () =>{
         expect(gameboard.wippedBoard()).toBeTruthy()
 
 
+    })
+})
+
+describe("player testing", () =>{
+
+    let player
+
+    beforeEach(() =>{ player = createPlayer()})
+
+    test("attack enemy gameboard", () =>{
+        player.attack("a",1)
+        expect(player.hasAttacked("a",1)).toBeTruthy()
+    })
+
+    test("it should know where has attacked correctly", () =>{
+        
+        expect(player.hasAttacked("a",1)).toBeFalsy()
+    })
+
+    test("dont allow doble shooting", ()=>{
+        player.attack("a",1)
+        expect(() => { player.attack("a",1) }).toThrow(Error)
+        expect(() => { player.attack("a",1) }).toThrow('Already shooted in that position')
     })
 })
