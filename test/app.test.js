@@ -243,4 +243,13 @@ describe("game loop testing", () =>{
         expect(game.hasWinner()).toBeTruthy()
         expect(game.winner()).toBe(1)
     })
+
+    test("Cant play turn if the game is over" , () =>{
+        game = createGame(simpleDeploy(),simpleDeploy())
+        game.playTurn("a",1)
+
+        expect(() => { game.playTurn("b",1) }).toThrow(Error)
+        expect(() => { game.playTurn("b",1) }).toThrow('Cant play turn if the game  is over')
+
+    })
 })

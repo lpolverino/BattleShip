@@ -41,6 +41,7 @@ const createGame = (gameboardPlayer, gameboardComputer) =>{
     }
 
     const playTurn = (column, row) =>{
+        if(hasWinner()) throw new Error('Cant play turn if the game  is over')
         if(isPlayerTurn()){
             player.player.attack(column,row);
             computer.gameboard.receiveAttack(column,row)
