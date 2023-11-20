@@ -1,6 +1,7 @@
 import { createShip } from "../src/ship";
 import { createGameboard } from "../src/gameboard"
 import { createPlayer } from "../src/player";
+import { createGame } from "../src/game";
 
 
 describe("ship testing", () =>{
@@ -197,5 +198,49 @@ describe("player testing", () =>{
         player.attack("a",1)
         expect(() => { player.attack("a",1) }).toThrow(Error)
         expect(() => { player.attack("a",1) }).toThrow('Already shooted in that position')
+    })
+})
+
+describe("game loop testing", () =>{
+    let game 
+
+    beforeEach(()=>{game = createGame([], [])})
+    
+    const simpleDeploy = () => {
+        return [{
+            direction: 1,
+            size:1,
+            column:"a",
+            row:1
+        }]
+    }
+
+    test("new game is not started finished", () =>{
+        expect(game.hasWinner()).toBeFalsy()
+    })
+
+    test("player start new game", () =>{
+        expect(game.isPlayerTurn()).toBeTruthy()
+    })
+
+    test("player attacking passes the turn", () =>{
+        game.playTurn("a",1)
+        expect(game.isPlayerTurn()).toBeFalsy()
+    })
+
+    test("player wins when attacking the last ship of computer", () =>{
+        game = createGame(simpleDeploy(),simpleDeploy())
+        game.playTurn("a",1)
+        expect(game.hasWinner()).toBeTruthy()
+        expect(game.winner()).toBe(0)
+    })
+
+    test("computer wins when attacking the last ship of player", () =>{
+        game = createGame(simpleDeploy(),simpleDeploy())
+        game.playTurn("a",5)
+        expect(game.hasWinner()).toBeFalsy()
+        game.playTurn("a",1)
+        expect(game.hasWinner()).toBeTruthy()
+        expect(game.winner()).toBe(1)
     })
 })
