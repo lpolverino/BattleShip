@@ -58,7 +58,7 @@ const createBoard = () =>{
 
 const evaulateValor = (cell, player, state) =>{
 
-    let renderValue 
+
     if(player === "player"){
         if(state.ship){
             return state.shot ? "R" : "S"
@@ -93,7 +93,7 @@ const fillCell = (player, column, row, state) =>{
 
 }   
 
-const createEmptyBoard = (gameboard, player, gameIteareFunction) =>{
+const createEmptyBoard = ( player, gameIteareFunction) =>{
     
     const fillHanlder = (column, row, state) =>{
         fillCell(player, column, row, state)
@@ -118,24 +118,57 @@ const fillBoard = (player, fillHandler, gameIteareFunction) =>{
     return
 } 
 
-const addEventToBoard = (eventHandler, board) =>{
+const addEventToBoard = (eventHandler, gameIteareFunction) =>{
+    console.log("here");
+    gameIteareFunction(false, eventHandler)
     return
 }
 
-const createComputerGameboard = (gameIteareFunction ,gameboard, attackHandler) =>{
+const createComputerGameboard = (gameIteareFunction , attackHandler) =>{
 
-    const board = createEmptyBoard(gameboard, "enemy", gameIteareFunction)
-    addEventToBoard(attackHandler, board)
+    const board = createEmptyBoard("enemy", gameIteareFunction)
+
+    const addCellEvent = (column, row, state) =>{
+        const rowIndex = row + 1
+        const cellIndex = column + "-" + rowIndex
+
+        let cell = document.getElementsByClassName(cellIndex)[0];
+
+        cell.addEventListener("click", (e) =>{
+            e.preventDefault()
+            attackHandler(column, row + 1);
+        })
+    }
+
+    // again, you can only append the listeners when the cells are in te DOM
+    setTimeout(() => { 
+        addEventToBoard( addCellEvent , gameIteareFunction)
+    , 0 })
 
     return board
 }
 
-const createPlayeGameboard = (gameIteareFunction , gameboard) =>{
-    return createEmptyBoard(gameboard,"player", gameIteareFunction)
+const createPlayeGameboard = (gameIteareFunction) =>{
+    return createEmptyBoard("player", gameIteareFunction)
     
+}
+
+const createMessage = (message) =>{
+    const messageConteiner = document.createElement("div")
+    messageConteiner.classList.add("message");
+
+    const messageEl = document.createElement("p");
+    messageEl.innerText = message
+
+    messageConteiner.appendChild(messageEl)
+
+    return messageConteiner
 }
 
 export default {
     createComputerGameboard,
-    createPlayeGameboard
+    createPlayeGameboard,
+    createMessage,
+    fillBoard,
+    fillCell
 }

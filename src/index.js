@@ -16,23 +16,24 @@ import  createGame  from "./game"
     
 
     const attackHandler = (column, row) =>{
-        
+
         try{
+            console.log(column +"-" +row);
             game.playTurn(column,row)
         } catch(e){
-            //if(e.message === already played) ui.renderMessage("already Played")
-            // return
+            console.log(e);
         }
 
         if (!evaluateIfGameOver() ) {
 
-            ui.render(game.gameboards())
 
-            const computerPlay = game.getComputerPlay()  
+            ui.render()
 
-            game.playTurn(computerPlay.column, computerPlay.row)
+            const computerPlay = game.getComputerPlay()
+
+            //game.playTurn(computerPlay.column, computerPlay.row)
         
-            if(!evaluateIfGameOver()) ui.render(game.gameboards())
+            if(!evaluateIfGameOver()) ui.render()
         }
         
     }
@@ -41,7 +42,7 @@ import  createGame  from "./game"
 
     let ui = uiRender()
 
-    ui.intialize(game.iterateMap, game.gameboards(), attackHandler)
+    ui.intialize(game.iterateMap, attackHandler)
 
 })();
 
