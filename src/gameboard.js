@@ -107,11 +107,25 @@ const createGameboard = () =>{
         
         for(const column in map){
             map[column].forEach((currentValue, rowIndex) =>{
-                handler(column, rowIndex, currentValue)
+                handler(column, rowIndex, {
+                    shot: currentValue.receivedAttack ,
+                    ship: currentValue.receiveAttack ? hasShip(column, rowIndex) : false
+                })
             })
             
         }
 
+    }
+
+    const iterateShipMap = (handler) =>{
+        for(const column in map){
+            map[column].forEach((currentValue, rowIndex) =>{
+                handler(column, rowIndex, {
+                    ship: currentValue.ocupied,
+                    shot: currentValue.receivedAttack
+                })
+            })
+        }
     }
 
     return {
@@ -122,6 +136,7 @@ const createGameboard = () =>{
         hasBeenAtacked,
         wippedBoard,
         iterateMap,
+        iterateShipMap
     }
 }
 

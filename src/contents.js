@@ -56,6 +56,24 @@ const createBoard = () =>{
     return table
 }
 
+const evaulateValor = (cell, player, state) =>{
+
+    let renderValue 
+    if(player === "player"){
+        if(state.ship){
+            return state.shot ? "R" : "S"
+        } else{
+            return "W"
+        }
+    }else{
+        if(state.ship){
+            return state.shot ? "R" : "W"
+        } else{
+            return "W"
+        }
+    }
+}
+
  //super fragile
 const fillCell = (player, column, row, state) =>{
    
@@ -71,11 +89,11 @@ const fillCell = (player, column, row, state) =>{
         cell = document.getElementsByClassName(cellIndex)[0]
     }
 
-    cell.innerText = player
+    cell.innerText  = evaulateValor(cell, player, state)
 
 }   
 
-const createEmptyBoard = (gameboard, player) =>{
+const createEmptyBoard = (gameboard, player, gameIteareFunction) =>{
     
     const fillHanlder = (column, row, state) =>{
         fillCell(player, column, row, state)
@@ -87,15 +105,16 @@ const createEmptyBoard = (gameboard, player) =>{
     const gameboardEl = createBoard()
     
     //the dom dosent load at this point, so fill board is super fragile need to run before DOM loading
-    setTimeout( () => fillBoard(gameboard, fillHanlder) ,0) 
+    setTimeout( () => fillBoard(player, fillHanlder, gameIteareFunction) ,0) 
 
     gameboardDiv.appendChild(gameboardEl)
     
     return gameboardDiv 
 }
 
-const fillBoard = (gameboard, fillHandler) =>{
-    gameboard.iterateMap(fillHandler)
+const fillBoard = (player, fillHandler, gameIteareFunction) =>{
+    const isPlayer = player === "player" ? true : false
+    gameIteareFunction(isPlayer, fillHandler)
     return
 } 
 
@@ -103,16 +122,16 @@ const addEventToBoard = (eventHandler, board) =>{
     return
 }
 
-const createComputerGameboard = (gameboard, attackHandler) =>{
+const createComputerGameboard = (gameIteareFunction ,gameboard, attackHandler) =>{
 
-    const board = createEmptyBoard(gameboard, "enemy",)
+    const board = createEmptyBoard(gameboard, "enemy", gameIteareFunction)
     addEventToBoard(attackHandler, board)
 
     return board
 }
 
-const createPlayeGameboard = (gameboard) =>{
-    return createEmptyBoard(gameboard,"player")
+const createPlayeGameboard = (gameIteareFunction , gameboard) =>{
+    return createEmptyBoard(gameboard,"player", gameIteareFunction)
     
 }
 

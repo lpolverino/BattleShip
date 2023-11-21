@@ -83,12 +83,18 @@ export default function  createGame(gameboardPlayer, gameboardComputer){
         }
     }
 
+    const iterateMap = (isPlayer, handler) =>{
+        if(isPlayer) return player.gameboard.iterateShipMap(handler)
+        return computer.gameboard.iterateMap(handler)
+    }
+
     return{
         hasWinner,
         isPlayerTurn,
         playTurn,
         winner,
         gameboards,
-        getComputerPlay
+        getComputerPlay,
+        iterateMap
     }
 }

@@ -6,10 +6,10 @@ export default function uiRender () {
     let playerDiv = document.getElementById("player");
     let enemyDiv = document.getElementById("enemy")
 
-    const intialize = (gameboards, attackHandler) =>{
+    const intialize = (gameIteareFunction, gameboards, attackHandler) =>{
         
-        const playerGameboard = contents.createComputerGameboard(gameboards.player, attackHandler)
-        const enemyGameboard = contents.createPlayeGameboard(gameboards.computer)
+        const playerGameboard = contents.createComputerGameboard(gameIteareFunction, gameboards.player, attackHandler)
+        const enemyGameboard = contents.createPlayeGameboard( gameIteareFunction , gameboards.computer)
         
         playerDiv.appendChild(playerGameboard)
         enemyDiv.appendChild(enemyGameboard)

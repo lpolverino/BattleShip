@@ -41,7 +41,7 @@ import  createGame  from "./game"
 
     let ui = uiRender()
 
-    ui.intialize(game.gameboards(), attackHandler)
+    ui.intialize(game.iterateMap, game.gameboards(), attackHandler)
 
 })();
 
