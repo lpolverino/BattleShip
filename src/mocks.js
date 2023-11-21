@@ -10,6 +10,35 @@ const createGamboardMock = () =>{
 }
 
 
+const boats = [
+    {
+        name:"Destroyer",
+        size:4,
+        position:"H"
+    },
+    {
+        name:"AirShip",    
+        size:3,
+        position:"H"
+    },
+    {
+        name:"Submarine",    
+        size:3,
+        position:"H"
+    },
+    {
+        name:"Ship",    
+        size:2,
+        position:"H"
+    },
+    {
+        name:"Boat",    
+        size:1,
+        position:"H"
+    }
+]
+
 export default {
-    createGamboardMock
+    createGamboardMock,
+    boats
 }

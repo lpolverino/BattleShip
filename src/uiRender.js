@@ -1,28 +1,31 @@
 import contents from './contents'
 
 
-export default function uiRender () {
-
+export default function uiRender (boatList) {
+ 
     let playerDiv = document.getElementById("player");
     let enemyDiv = document.getElementById("enemy");
-    const contentBody = document.getElementById("content")
-
+    let sideScreen = document.getElementById("drag-section");
+    const contentBody = document.getElementById("content");
 
     let attackHandler 
     let iterFunction
 
-    const intialize = (gameIteareFunction, gameAttackHandler) =>{
+    const intialize = (gameIteareFunction, gameAttackHandler, dragHandler, dropHandler, clickHandler) =>{
         
         attackHandler = gameAttackHandler
         iterFunction = gameIteareFunction
 
-        cleanScreen()
+        cleanScreen();
 
-        const playerGameboard = contents.createComputerGameboard(iterFunction, attackHandler)
-        const enemyGameboard = contents.createPlayeGameboard(iterFunction)
-        
-        playerDiv.appendChild(playerGameboard)
-        enemyDiv.appendChild(enemyGameboard)
+        const playerGameboard = contents.createComputerGameboard(iterFunction, attackHandler);
+        const enemyGameboard = contents.createPlayeGameboard(iterFunction);
+        const ships = contents.createShips(dragHandler,clickHandler, boatList);
+
+
+        playerDiv.appendChild(playerGameboard);
+        enemyDiv.appendChild(enemyGameboard);
+        sideScreen.appendChild(ships);
     }
 
     const clearDiv = (divEl) =>{
@@ -48,6 +51,7 @@ export default function uiRender () {
     const cleanScreen = () =>{
         clearDiv(playerDiv)
         clearDiv(enemyDiv)
+        clearDiv(sideScreen)
         clearMessages()
         clearButtons()
     }

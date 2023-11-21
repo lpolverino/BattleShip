@@ -177,11 +177,38 @@ const createButton = (handler, btnId) => {
     return buttonConteiner
 }
 
+const createShip = (ship, dragHandler, clickHandler ) =>{
+    const shipEl = document.createElement("div");
+    shipEl.dataset.position = ship.position
+    shipEl.dataset.size = ship.size
+    shipEl.innerText = ship.name + " " + ship.size
+
+    shipEl.draggable = true
+    shipEl.onclick = clickHandler
+    shipEl.ondragstart = dragHandler
+
+    return shipEl
+}
+
+const createShips = (dragHandler, clickHandler, ships) =>{
+    
+    const shipsConteiner = document.createElement("div");
+    shipsConteiner.id = "Ships" 
+    
+    ships.forEach((ship) => {
+        const shipEl = createShip(ship, dragHandler, clickHandler)
+        shipsConteiner.appendChild(shipEl)
+    })
+
+    return shipsConteiner
+}
+
 export default {
     createComputerGameboard,
     createPlayeGameboard,
     createMessage,
     createButton,
     fillBoard,
-    fillCell
+    fillCell,
+    createShips
 }
