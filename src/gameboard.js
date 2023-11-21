@@ -104,7 +104,14 @@ const createGameboard = () =>{
     }
 
     const iterateMap = (handler) =>{
-        return null
+        
+        for(const column in map){
+            map[column].forEach((currentValue, rowIndex) =>{
+                handler(column, rowIndex, currentValue)
+            })
+            
+        }
+
     }
 
     return {
