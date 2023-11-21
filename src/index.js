@@ -1,13 +1,22 @@
 import  uiRender  from "./uiRender"
 import  createGame  from "./game"
-
+import mocks from "./mocks"
 
 
 (async function createApp(){
 
+    let game
+    let ui = uiRender()
+
+    const replyHandler = () =>{
+        game = createGame(mocks.createGamboardMock(), mocks.createGamboardMock() )
+        ui.intialize(game.iterateMap, attackHandler)
+    }
+
     const evaluateIfGameOver = () =>{
         if(game.hasWinner()){
-            ui.renderGameOver(game.winner())
+            console.log(game.winner());
+            ui.renderGameOver(game.winner() === 0 ? "Player" : "Computer", replyHandler)
             return true
         }
         
@@ -18,7 +27,6 @@ import  createGame  from "./game"
     const attackHandler = (column, row) =>{
 
         try{
-            console.log(column +"-" +row);
             game.playTurn(column,row)
         } catch(e){
             console.log(e);
@@ -26,21 +34,18 @@ import  createGame  from "./game"
 
         if (!evaluateIfGameOver() ) {
 
-
             ui.render()
 
             const computerPlay = game.getComputerPlay()
 
-            //game.playTurn(computerPlay.column, computerPlay.row)
+            game.playTurn(computerPlay.column, computerPlay.row)
         
             if(!evaluateIfGameOver()) ui.render()
         }
         
     }
 
-    let game = createGame([], [])
-
-    let ui = uiRender()
+    game = createGame(mocks.createGamboardMock(), mocks.createGamboardMock() )
 
     ui.intialize(game.iterateMap, attackHandler)
 

@@ -5,6 +5,8 @@ export default function uiRender () {
 
     let playerDiv = document.getElementById("player");
     let enemyDiv = document.getElementById("enemy");
+    const contentBody = document.getElementById("content")
+
 
     let attackHandler 
     let iterFunction
@@ -29,14 +31,29 @@ export default function uiRender () {
         }
     }
 
+    const clearMessages = () =>{
+        const messages = document.querySelectorAll('.message');
+        messages.forEach((message) => {
+            message.remove()
+        })
+    }
+
+    const clearButtons= () =>{
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach((button) => {
+            button.remove()
+        })
+    }
+
     const cleanScreen = () =>{
         clearDiv(playerDiv)
         clearDiv(enemyDiv)
+        clearMessages()
+        clearButtons()
     }
 
     const render = () =>{
 
-        
         const fillHanlder = (column, row, state) =>{
             contents.fillCell(player, column, row, state)
         }
@@ -46,13 +63,14 @@ export default function uiRender () {
         contents.fillBoard("enemy", fillHanlder, iterFunction)
     }
 
-    const renderGameOver = () =>{
+    const renderGameOver = (gameWinner, replyHandler) =>{       
         cleanScreen()
-        const message = contents.createMessage("Game Over")
-
-        const contentBody = document.getElementById("content")
+        const message = contents.createMessage("Game Over: " + gameWinner + " Wins!")
+        const id = "btn-reply"
+        const button = contents.createButton(replyHandler, id)
 
         contentBody.appendChild(message)
+        contentBody.appendChild(button)
     }
     
     return{

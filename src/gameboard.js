@@ -109,7 +109,7 @@ const createGameboard = () =>{
             map[column].forEach((currentValue, rowIndex) =>{
                 handler(column, rowIndex, {
                     shot: currentValue.receivedAttack ,
-                    ship: currentValue.receiveAttack ? hasShip(column, rowIndex) : false
+                    ship: currentValue.receivedAttack ? hasShip(column, rowIndex) : false
                 })
             })
             

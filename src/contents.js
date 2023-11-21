@@ -56,8 +56,7 @@ const createBoard = () =>{
     return table
 }
 
-const evaulateValor = (cell, player, state) =>{
-
+const evaulateValor = (player, state) =>{
 
     if(player === "player"){
         if(state.ship){
@@ -89,7 +88,7 @@ const fillCell = (player, column, row, state) =>{
         cell = document.getElementsByClassName(cellIndex)[0]
     }
 
-    cell.innerText  = evaulateValor(cell, player, state)
+    cell.innerText  = evaulateValor(player, state)
 
 }   
 
@@ -119,7 +118,6 @@ const fillBoard = (player, fillHandler, gameIteareFunction) =>{
 } 
 
 const addEventToBoard = (eventHandler, gameIteareFunction) =>{
-    console.log("here");
     gameIteareFunction(false, eventHandler)
     return
 }
@@ -136,7 +134,7 @@ const createComputerGameboard = (gameIteareFunction , attackHandler) =>{
 
         cell.addEventListener("click", (e) =>{
             e.preventDefault()
-            attackHandler(column, row + 1);
+            attackHandler(column, row );
         })
     }
 
@@ -165,10 +163,25 @@ const createMessage = (message) =>{
     return messageConteiner
 }
 
+const createButton = (handler, btnId) => {
+    const buttonConteiner = document.createElement("div");
+    buttonConteiner.id= btnId;
+
+    const buttonEl = document.createElement("button");
+    buttonEl.innerText = btnId
+    buttonEl.onclick = handler
+
+    buttonConteiner.appendChild(buttonEl);
+    buttonConteiner.classList.add("btn")
+
+    return buttonConteiner
+}
+
 export default {
     createComputerGameboard,
     createPlayeGameboard,
     createMessage,
+    createButton,
     fillBoard,
     fillCell
 }
