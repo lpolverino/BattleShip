@@ -28,6 +28,4 @@ const createPlayer = () =>{
     }
 }
 
-module.exports = {
-    createPlayer,
-}
+export default createPlayer

@@ -26,6 +26,4 @@ const createShip = (shipLength) =>{
     }
 }
 
-module.exports = {
-    createShip
-}
+export default createShip

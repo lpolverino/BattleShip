@@ -1,4 +1,4 @@
-import { createShip } from "./ship"
+import  createShip  from "./ship"
 
 const createGameboard = () =>{
 
@@ -103,17 +103,20 @@ const createGameboard = () =>{
         return wipped
     }
 
+    const iterateMap = (handler) =>{
+        return null
+    }
+
     return {
         hasShip,
         deployHorizontalShip,
         deployVerticalShip,
         receiveAttack,
         hasBeenAtacked,
-        wippedBoard
+        wippedBoard,
+        iterateMap,
     }
 }
 
 
-module.exports = {
-    createGameboard
-}
+export default createGameboard

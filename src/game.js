@@ -1,5 +1,5 @@
-import { createPlayer } from "./player"
-import { createGameboard } from "./gameboard"
+import  createPlayer  from "./player"
+import  createGameboard  from "./gameboard"
 
 const populateGameboard = (gameboardObj, gameboardPositions) =>{
 
@@ -12,8 +12,32 @@ const populateGameboard = (gameboardObj, gameboardPositions) =>{
     })
 }
 
+const createTurns = () =>{
 
-const createGame = (gameboardPlayer, gameboardComputer) =>{
+    let current = 0
+
+    const currentTurn = () =>{
+        return current +1
+    }
+
+    const pass = () =>{
+        current = (current + 1) % 2 
+    }
+
+    return {
+        currentTurn,
+        pass
+    }
+}
+
+const getComputerPlay = () =>{
+    return {
+        column:"a",
+        row:1
+    }
+}
+
+export default function  createGame(gameboardPlayer, gameboardComputer){
     let turns = createTurns()
     let player = {
         gameboard: createGameboard(),
@@ -52,33 +76,19 @@ const createGame = (gameboardPlayer, gameboardComputer) =>{
         turns.pass()
     }
 
+    const gameboards = () =>{
+        return {
+            player: player.gameboard,
+            computer: computer.gameboard,
+        }
+    }
+
     return{
         hasWinner,
         isPlayerTurn,
         playTurn,
-        winner
+        winner,
+        gameboards,
+        getComputerPlay
     }
-}
-
-const createTurns = () =>{
-
-    let current = 0
-
-    const currentTurn = () =>{
-        return current +1
-    }
-
-    const pass = () =>{
-        current = (current + 1) % 2 
-    }
-
-    return {
-        currentTurn,
-        pass
-    }
-}
-
-module.exports ={
-    createGame
-    
 }
