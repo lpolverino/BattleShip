@@ -30,12 +30,7 @@ const createTurns = () =>{
     }
 }
 
-const getComputerPlay = () =>{
-    return {
-        column:"a",
-        row:1
-    }
-}
+
 
 export default function  createGame(gameboardPlayer, gameboardComputer){
     let turns = createTurns()
@@ -45,12 +40,22 @@ export default function  createGame(gameboardPlayer, gameboardComputer){
     }
     let computer = {
         gameboard:createGameboard(),
-        player: createPlayer()
+        player: createPlayer(),
+        shots:0
     }
 
     populateGameboard(player.gameboard, gameboardPlayer)
     populateGameboard(computer.gameboard, gameboardComputer)
     
+    const addShip = (direction, size, column, row) =>{
+        populateGameboard(player.gameboard, [{
+            direction: direction === "H" ? 1 : 2,
+            size,
+            column,
+            row
+        }])
+    }
+
     const hasWinner = () =>{
         return player.gameboard.wippedBoard() || computer.gameboard.wippedBoard()
     }
@@ -88,6 +93,15 @@ export default function  createGame(gameboardPlayer, gameboardComputer){
         return computer.gameboard.iterateMap(handler)
     }
 
+    const getComputerPlay = () =>{
+
+        computer.shots ++
+        return {
+            column:"a",
+            row:computer.shots
+        }
+    }
+
     return{
         hasWinner,
         isPlayerTurn,
@@ -95,6 +109,7 @@ export default function  createGame(gameboardPlayer, gameboardComputer){
         winner,
         gameboards,
         getComputerPlay,
-        iterateMap
+        iterateMap,
+        addShip
     }
 }

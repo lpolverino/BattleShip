@@ -58,6 +58,7 @@ const createBoard = () =>{
 
 const evaulateValor = (player, state) =>{
 
+    //console.log(player);
     if(player === "player"){
         if(state.ship){
             return state.shot ? "R" : "S"
@@ -117,8 +118,8 @@ const fillBoard = (player, fillHandler, gameIteareFunction) =>{
     return
 } 
 
-const addEventToBoard = (eventHandler, gameIteareFunction) =>{
-    gameIteareFunction(false, eventHandler)
+const addEventToBoard = (eventHandler, gameIteareFunction, isPerson = false) =>{
+    gameIteareFunction(isPerson, eventHandler)
     return
 }
 
@@ -146,9 +147,32 @@ const createComputerGameboard = (gameIteareFunction , attackHandler) =>{
     return board
 }
 
-const createPlayeGameboard = (gameIteareFunction) =>{
-    return createEmptyBoard("player", gameIteareFunction)
+const createPlayeGameboard = (gameIteareFunction, dropHandler) =>{
+    const playerBoard = createEmptyBoard("player", gameIteareFunction)
     
+    const addCellDrop = (column, row, state) =>{
+
+        const rowIndex = row + 1
+        const cellIndex = column + "-" + rowIndex
+
+        let cell = document.getElementsByClassName(cellIndex)[1];
+
+        cell.ondragover =  function (e) {
+            e.preventDefault()
+        }
+
+        cell.addEventListener("drop",(e) =>{
+            e.preventDefault()
+            dropHandler(e)
+        })
+    }
+
+    setTimeout(() => { 
+        addEventToBoard( addCellDrop , gameIteareFunction, true)
+    , 0 })
+
+
+    return playerBoard
 }
 
 const createMessage = (message) =>{

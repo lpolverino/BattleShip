@@ -42,6 +42,7 @@ const createGameboard = () =>{
     }
 
     const deployShip = (length, column, indexToIterate, deplotHandler) =>{
+
         assertCanPlaceShip(length, column, indexToIterate)
         const ship = createShip(length)
         insertShip(length, (i) => deplotHandler(i,ship))
@@ -104,7 +105,6 @@ const createGameboard = () =>{
     }
 
     const iterateMap = (handler) =>{
-        
         for(const column in map){
             map[column].forEach((currentValue, rowIndex) =>{
                 handler(column, rowIndex, {

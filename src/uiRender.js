@@ -19,7 +19,7 @@ export default function uiRender (boatList) {
         cleanScreen();
 
         const playerGameboard = contents.createComputerGameboard(iterFunction, attackHandler);
-        const enemyGameboard = contents.createPlayeGameboard(iterFunction);
+        const enemyGameboard = contents.createPlayeGameboard(iterFunction, dropHandler);
         const ships = contents.createShips(dragHandler,clickHandler, boatList);
 
 
@@ -56,15 +56,22 @@ export default function uiRender (boatList) {
         clearButtons()
     }
 
-    const render = () =>{
+    const renderPlayer = () =>{
+        contents.fillBoard("player",
+            (column, row, state) =>{
+                contents.fillCell("player", column, row, state)
+            },
+            iterFunction
+        );
+    }
 
-        const fillHanlder = (column, row, state) =>{
-            contents.fillCell(player, column, row, state)
-        }
-
-        contents.fillBoard("player", fillHanlder, iterFunction)
-
-        contents.fillBoard("enemy", fillHanlder, iterFunction)
+    const renderEnemy = () =>{
+        contents.fillBoard("enemy",
+            (column, row, state) =>{
+                contents.fillCell("enemy", column, row, state)
+            },
+            iterFunction
+        );
     }
 
     const renderGameOver = (gameWinner, replyHandler) =>{       
@@ -76,10 +83,19 @@ export default function uiRender (boatList) {
         contentBody.appendChild(message)
         contentBody.appendChild(button)
     }
+
+    const renderStart = (startHandler) =>{
+        const id = "btn-start"
+        const button = contents.createButton(startHandler, id)
+
+        sideScreen.appendChild(button)
+    }
     
     return{
         intialize,
-        render,
+        renderEnemy,
+        renderPlayer,
         renderGameOver,
+        renderStart
     }
 }
