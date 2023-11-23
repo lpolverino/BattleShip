@@ -41,6 +41,25 @@ const createGameboard = () =>{
         checkInvalidPosition(columnToPlace, index + length -1)
     }
 
+    //this function expect that colum is a string when direction is horizontal and a int when is vertical
+    const checkOverlaping = (length, direction,column, row) =>{
+        let i = 0
+        let result = true
+        if(direction === "horizontal"){
+            while(i < length){
+                result = result && !map[column][row + i].ocupied
+                i++
+            }
+        }else{
+            const columns = createColumns()
+            while (i < length){
+                result = result && !map[columns[column + i]][row].ocupied
+                i++
+            }
+        }
+        if(!result) throw new Error("Bad request")
+    }
+
     const deployShip = (length, column, indexToIterate, deplotHandler) =>{
 
         assertCanPlaceShip(length, column, indexToIterate)
@@ -50,6 +69,8 @@ const createGameboard = () =>{
 
     const deployHorizontalShip = (length, column, row) =>{
 
+        //bug not refactored whit TDD
+        checkOverlaping(length, "horizontal" , column, row)
         deployShip(length, column, row, (i,ship) =>{
             map[column][row+i] = createOcupiedSpot(ship)
         })
@@ -59,9 +80,13 @@ const createGameboard = () =>{
         const colums = createColumns()
         let indexColumn = colums.indexOf(column)
 
+        //bug not refactored whit TDD
+        checkOverlaping(length, "vertical" , indexColumn, row)
+
         deployShip(length, column, indexColumn, (i,ship) =>{
             map[colums[indexColumn + i]][row] = createOcupiedSpot(ship)
         })
+
     }
 
     const checkInvalidPosition = (column, position) => {

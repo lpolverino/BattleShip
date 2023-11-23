@@ -206,6 +206,7 @@ const createShip = (ship, dragHandler, clickHandler ) =>{
     shipEl.dataset.position = ship.position
     shipEl.dataset.size = ship.size
     shipEl.innerText = ship.name + " " + ship.size
+    shipEl.id = ship.name
 
     shipEl.draggable = true
     shipEl.onclick = clickHandler

@@ -87,6 +87,22 @@ describe("gameboard testing", () =>{
     
     })
 
+    test("the gameboard cannot place a overlaping horizontal ship", ()=>{
+
+        gameboard.deployHorizontalShip(2,"a",1)
+
+        expect(()=>{gameboard.deployHorizontalShip(2,"a",1)}).toThrow(Error);
+        expect(()=>{gameboard.deployHorizontalShip(2,"a",1)}).toThrow("already ship in that location")
+    })
+
+    test("the gameboard cannot place a overlaping horizontal ship", ()=>{
+
+        gameboard.deployHorizontalShip(2,"a",1)
+        
+        expect(()=>{gameboard.deployVerticalShip(2,"a",1)}).toThrow(Error);
+        expect(()=>{gameboard.deployVerticalShip(2,"a",1)}).toThrow("already ship in that location")
+    })
+
     test("the gameboard remember if an unocupated cordinate was shoted", () =>{
         gameboard.deployHorizontalShip(2, "a", 1)
 

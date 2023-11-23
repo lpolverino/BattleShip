@@ -27,7 +27,7 @@ import mocks from "./mocks"
         }
 
         shipPlased ++
-        if(shipPlased === 4) ui.renderStart(startGame)
+        if(shipPlased === 5) ui.renderStart(startGame)
         return data
     }
 
@@ -39,10 +39,14 @@ import mocks from "./mocks"
 
     const dropHandler = (ev) => {
        if(!started) {
-        const { direction, size, column, row } = drop(ev)
-        //patched
-        game.addShip(direction, size, column, row -1);
-        ui.renderPlayer()
+            const { direction, size, column, row } = drop(ev)
+            //patched
+            try{
+                game.addShip(direction, size, column, row -1);
+                ui.renderPlayer()
+            }catch(e){
+                console.log("Error bad request");
+            }    
         }
     }
 
@@ -94,9 +98,6 @@ import mocks from "./mocks"
         }
         
     }
-
-    //game = createGame(mocks.createGamboardMock(), mocks.createGamboardMock() )
-
     game = createGame([], mocks.createGamboardMock())
     ui.intialize(game.iterateMap, attackHandler, drag, dropHandler, shipPressed)
 
