@@ -186,12 +186,12 @@ const createMessage = (message) =>{
     return messageConteiner
 }
 
-const createButton = (handler, btnId) => {
+const createButton = (handler, btnId, text) => {
     const buttonConteiner = document.createElement("div");
     buttonConteiner.id= btnId;
 
     const buttonEl = document.createElement("button");
-    buttonEl.innerText = btnId
+    buttonEl.innerText = text
     buttonEl.onclick = handler
 
     buttonConteiner.appendChild(buttonEl);
@@ -227,6 +227,21 @@ const createShips = (dragHandler, clickHandler, ships) =>{
     return shipsConteiner
 }
 
+const createMessegeBoard = () =>{
+
+    const messageBoard = document.createElement("div")
+    messageBoard.id= "msg-board"
+
+    return messageBoard
+}
+
+const createButtonConteiner = () =>{
+    const conteiner = document.createElement("div");
+    conteiner.id = "btn-con"
+
+    return conteiner
+}
+
 export default {
     createComputerGameboard,
     createPlayeGameboard,
@@ -234,5 +249,7 @@ export default {
     createButton,
     fillBoard,
     fillCell,
-    createShips
+    createShips,
+    createMessegeBoard,
+    createButtonConteiner
 }

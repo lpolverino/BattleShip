@@ -27,7 +27,10 @@ import mocks from "./mocks"
         }
 
         shipPlased ++
-        if(shipPlased === 5) ui.renderStart(startGame)
+        if(shipPlased === 5) ui.renderStart( (e) =>{
+            startGame()
+            e.target.disabled = true
+        })
         return data
     }
 
@@ -53,6 +56,7 @@ import mocks from "./mocks"
     const replyHandler = () =>{
         game = createGame([], mocks.createGamboardMock() )
         ui.intialize(game.iterateMap, attackHandler, drag, drop, shipPressed)
+        ui.renderMessage("Drag and Drop the ships below to the bottom gamboard.\n Click the boat to change its direction")
     }
 
     const evaluateIfGameOver = () =>{
@@ -78,28 +82,33 @@ import mocks from "./mocks"
 
         if(!started) return
         try{
-            console.log("player attack column: " + column +" row: " + row);
+            //console.log("player attack column: " + column +" row: " + row);
             game.playTurn(column,row)
+            ui.renderMessage("player attack column: " + column +" row: " + row)
         } catch(e){
             console.log(e);
+            ui.renderEnemy("Error ocurred check the console")
         }
 
         if (!evaluateIfGameOver() ) {
 
-            ui.renderPlayer()
+            ui.renderEnemy()
+            
 
             const computerPlay = game.getComputerPlay()
 
-            console.log("IA attack column: " + computerPlay.column +" row: " + computerPlay.row);
-            game.playTurn(computerPlay.column, computerPlay.row)
-        
-            if(!evaluateIfGameOver()) ui.renderEnemy()
+            setTimeout( () =>{
+                game.playTurn(computerPlay.column, computerPlay.row)
+                ui.renderMessage("IA attack column: " + computerPlay.column +" row: " + computerPlay.row)
+                if(!evaluateIfGameOver()) ui.renderPlayer()
+            }, 1000);
+            
         }
         
     }
     game = createGame([], mocks.createGamboardMock())
     ui.intialize(game.iterateMap, attackHandler, drag, dropHandler, shipPressed)
-
+    ui.renderMessage("Drag and Drop the ships below to the bottom gamboard.\n Click the boat to change its direction")
 })();
 
 

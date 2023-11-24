@@ -20,12 +20,16 @@ export default function uiRender (boatList) {
 
         const playerGameboard = contents.createComputerGameboard(iterFunction, attackHandler);
         const enemyGameboard = contents.createPlayeGameboard(iterFunction, dropHandler);
+        
+        const messageBoard = contents.createMessegeBoard()
         const ships = contents.createShips(dragHandler,clickHandler, boatList);
-
+        const buttonConteiner = contents.createButtonConteiner();
 
         playerDiv.appendChild(playerGameboard);
         enemyDiv.appendChild(enemyGameboard);
+        sideScreen.appendChild(messageBoard);
         sideScreen.appendChild(ships);
+        sideScreen.appendChild(buttonConteiner)
     }
 
     const clearDiv = (divEl) =>{
@@ -75,20 +79,26 @@ export default function uiRender (boatList) {
     }
 
     const renderGameOver = (gameWinner, replyHandler) =>{       
-        cleanScreen()
-        const message = contents.createMessage("Game Over: " + gameWinner + " Wins!")
+        renderMessage("Game Over: " + gameWinner + " Wins!")
         const id = "btn-reply"
-        const button = contents.createButton(replyHandler, id)
-
-        contentBody.appendChild(message)
-        contentBody.appendChild(button)
+        
+        const button = contents.createButton(replyHandler, id, "Reply")
+        
+        const buttonConteiner = document.getElementById("btn-con")
+        buttonConteiner.appendChild(button)
     }
 
     const renderStart = (startHandler) =>{
         const id = "btn-start"
-        const button = contents.createButton(startHandler, id)
+        const button = contents.createButton(startHandler, id, "Go!")
+        //patched
+        const buttonConteiner = document.getElementById("btn-con")
+        buttonConteiner.appendChild(button)
+    }
 
-        sideScreen.appendChild(button)
+    const renderMessage = (messege) =>{
+        const messgeBoard = document.getElementById("msg-board");
+        messgeBoard.innerText = messege
     }
     
     return{
@@ -96,6 +106,7 @@ export default function uiRender (boatList) {
         renderEnemy,
         renderPlayer,
         renderGameOver,
-        renderStart
+        renderStart,
+        renderMessage
     }
 }
