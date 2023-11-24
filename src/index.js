@@ -51,9 +51,8 @@ import mocks from "./mocks"
     }
 
     const replyHandler = () =>{
-        game = createGame(mocks.createGamboardMock(), mocks.createGamboardMock() )
+        game = createGame([], mocks.createGamboardMock() )
         ui.intialize(game.iterateMap, attackHandler, drag, drop, shipPressed)
-        startGame()
     }
 
     const evaluateIfGameOver = () =>{

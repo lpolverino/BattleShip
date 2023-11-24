@@ -58,18 +58,17 @@ const createBoard = () =>{
 
 const evaulateValor = (player, state) =>{
 
-    //console.log(player);
     if(player === "player"){
         if(state.ship){
-            return state.shot ? "R" : "S"
+            return state.shot ? "hit" : "ship"
         } else{
-            return "W"
+            return "water"
         }
     }else{
         if(state.ship){
-            return state.shot ? "R" : "W"
+            return state.shot ? "hit" : "water"
         } else{
-            return "W"
+            return "water"
         }
     }
 }
@@ -89,7 +88,7 @@ const fillCell = (player, column, row, state) =>{
         cell = document.getElementsByClassName(cellIndex)[0]
     }
 
-    cell.innerText  = evaulateValor(player, state)
+    cell.classList.add( evaulateValor(player, state))
 
 }   
 
@@ -218,7 +217,7 @@ const createShip = (ship, dragHandler, clickHandler ) =>{
 const createShips = (dragHandler, clickHandler, ships) =>{
     
     const shipsConteiner = document.createElement("div");
-    shipsConteiner.id = "Ships" 
+    shipsConteiner.id = "ships" 
     
     ships.forEach((ship) => {
         const shipEl = createShip(ship, dragHandler, clickHandler)

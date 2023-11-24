@@ -2,28 +2,127 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    --dark-grey--green : rgb(24,61,61);
+    --grey-green: rgb(92,131,116);
+    --light--grey-green : rgb(147, 177, 166);
+    --navy--red: rgb(179,19,18);
+    --navy--blue:rgb(43,42,76);
+    --navy--green:rgb(142,172,80);
+    --navy--yellow:rgb(250, 237, 7);
+    --water: rgb(110, 150, 238);
+}   
+
+html, body {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#title{
+    background-color: var(--grey-green);
+    height: 3.5rem;
+    text-align: center;
+    justify-content:center;
+    display: flex;
+}
+
+#title a{
+    align-self: flex-end;
+    margin-right: 10px;
+    font-size: larger;
+    color: black;
+}
+
+a:link {
+    text-decoration: none;
+  }
+  
+  a:visited {
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  a:active {
+    text-decoration: underline;
+  }
+
+h1{
+    font-size: 42px;
+    margin: auto;
 }
 
 #content{
+    background-color: var(--light--grey-green);
     display: grid;
     grid-template-columns: 4fr 1fr;
     grid-template-rows: repeat(2, 1fr);
     justify-items: center;
     align-items: center;
-    gap: 52px;
+    height: 100%;
 }
 
 #enemy{
     grid-row: 1/2;
-    grid-column: span;
+    grid-column: 1/2;
 }
 
 #player{
     grid-row: 2/3;
-    grid-column: span;
+    grid-column: 1/2;
 }
 
 #drag-section{
+    background-color: var(--dark-grey--green);
     grid-column: 2/3;
     grid-row: 1/3;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+}
+
+#ships{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+#ships div {
+    font-size: 28px;
+    margin-top: 1rem;
+    color: var(--light--grey-green)
+}
+.gameboard{
+    display: grid;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+td{
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    background-color: var(--light--grey-green);
+}
+
+.water{
+    background-color: var(--water);
+}
+
+.hit {
+    background-color: var(--navy--red);
+}
+
+.ship {
+    background-color: var(--dark-grey--green);
 }
